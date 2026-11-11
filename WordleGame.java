@@ -114,31 +114,49 @@ public class WordleGame {
 
     public static void checkGuess(String guess, String TARGET, ArrayList<Character> unusedLetters) {
         String result = "";
-        // String guessCopy = "";
+        String[] statuses = scoreGuess(guess, TARGET);
 
-         for (int i = 0; i <=4; i++)
-            {
-                if (unusedLetters.contains(guess.charAt(i))) {
+        for (int i = 0; i < guess.length(); i++) {
+            if (unusedLetters.contains(guess.charAt(i))) {
                 unusedLetters.remove(Character.valueOf(guess.charAt(i)));
-                }
-                if (guess.charAt(i) == TARGET.charAt(i))
-                {   
-                    result += "\n" + guess.charAt(i) + " ";
-                    result += "🟩";
-                }
-                else if (TARGET.contains(String.valueOf(guess.charAt(i))))
-                {
-                    result += "\n" + guess.charAt(i) + " ";
-                    result += "🟨" ;
-                }
-                else
-                {
-                    result += "\n" + guess.charAt(i) + " ";
-                    result += "⬛";
-                }
             }
+
+            result += "\n" + guess.charAt(i) + " " + statuses[i];
+        }
+
         System.out.println("Unused letters: " + unusedLetters);
         System.out.println(result);
-        
+    }
+
+    static String[] scoreGuess(String guess, String target) {
+        String[] statuses = new String[guess.length()];
+        int[] remainingTargetLetters = new int[26];
+
+        for (int i = 0; i < target.length(); i++) {
+            remainingTargetLetters[target.charAt(i) - 'a']++;
+        }
+
+        for (int i = 0; i < guess.length(); i++) {
+            if (guess.charAt(i) == target.charAt(i)) {
+                statuses[i] = "🟩";
+                remainingTargetLetters[guess.charAt(i) - 'a']--;
+            }
+        }
+
+        for (int i = 0; i < guess.length(); i++) {
+            if (statuses[i] != null) {
+                continue;
+            }
+
+            int letterIndex = guess.charAt(i) - 'a';
+            if (remainingTargetLetters[letterIndex] > 0) {
+                statuses[i] = "🟨";
+                remainingTargetLetters[letterIndex]--;
+            } else {
+                statuses[i] = "⬛";
+            }
+        }
+
+        return statuses;
     }
 }

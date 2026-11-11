@@ -31,6 +31,13 @@ Then start it with:
 java WordleGame
 ```
 
+To run the duplicate-letter scoring checks:
+
+```bash
+javac WordleGame.java WordleGameTest.java
+java WordleGameTest
+```
+
 ## How to play
 
 - Enter a valid five-letter word when prompted.
@@ -44,5 +51,6 @@ java WordleGame
 ## Project files
 
 - `WordleGame.java` - game logic and command-line interface
+- `WordleGameTest.java` - duplicate-letter scoring checks
 - `solutions.txt` - possible answer words
 - `nonsolutions.txt` - additional accepted guesses
