@@ -1,6 +1,7 @@
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
@@ -25,6 +26,35 @@ public class WordleGame {
 
         final String TARGET = answers.get(new Random().nextInt(answers.size())).toLowerCase();
 
+        ArrayList<Character> unusedLetters = new ArrayList<>();
+
+        unusedLetters.add('a');
+        unusedLetters.add('b');
+        unusedLetters.add('c');
+        unusedLetters.add('d');
+        unusedLetters.add('e');
+        unusedLetters.add('f');
+        unusedLetters.add('g');
+        unusedLetters.add('h');
+        unusedLetters.add('i');
+        unusedLetters.add('j');
+        unusedLetters.add('k');
+        unusedLetters.add('l');
+        unusedLetters.add('m');
+        unusedLetters.add('n');
+        unusedLetters.add('o');
+        unusedLetters.add('p');
+        unusedLetters.add('q');
+        unusedLetters.add('r');
+        unusedLetters.add('s');
+        unusedLetters.add('t');
+        unusedLetters.add('u');
+        unusedLetters.add('v');
+        unusedLetters.add('w');
+        unusedLetters.add('x');
+        unusedLetters.add('y');
+        unusedLetters.add('z');
+
         System.out.println("Welcome to offbrand Wordle!");
         System.out.println("You have 5 guesses to find the correct 5-letter word.");
         System.out.println("🟩 means the letter is in the correct position.");
@@ -32,11 +62,12 @@ public class WordleGame {
         System.out.println("⬛ means the letter is not in the word.");
         System.out.println("Have fun and good luck!");
         for (int i = 1; i < 6; i++)
-            Guess(i, allowedGuesses, TARGET, args);
+            Guess(i, allowedGuesses, TARGET, args, unusedLetters);
+
         
     }
 
-    public static void Guess(int guessnum, Set<String> allowedGuesses, String TARGET, String[] args) throws IOException {
+    public static void Guess(int guessnum, Set<String> allowedGuesses, String TARGET, String[] args, ArrayList<Character> unusedLetters) throws IOException {
         String guess = "";
         while (true)
         {
@@ -70,7 +101,7 @@ public class WordleGame {
             // System.exit(0);
   
         } else {
-            checkGuess(guess, TARGET);
+            checkGuess(guess, TARGET, unusedLetters);
             if (guessnum == 5) {
                     System.out.println("Sorry, you've used all your guesses. The correct word was: " + TARGET);
                 }  
@@ -81,12 +112,15 @@ public class WordleGame {
         }
     }
 
-    public static void checkGuess(String guess, String TARGET) {
+    public static void checkGuess(String guess, String TARGET, ArrayList<Character> unusedLetters) {
         String result = "";
         // String guessCopy = "";
 
          for (int i = 0; i <=4; i++)
             {
+                if (unusedLetters.contains(guess.charAt(i))) {
+                unusedLetters.remove(Character.valueOf(guess.charAt(i)));
+                }
                 if (guess.charAt(i) == TARGET.charAt(i))
                 {   
                     result += "\n" + guess.charAt(i) + " ";
@@ -103,6 +137,7 @@ public class WordleGame {
                     result += "⬛";
                 }
             }
+        System.out.println("Unused letters: " + unusedLetters);
         System.out.println(result);
         
     }
