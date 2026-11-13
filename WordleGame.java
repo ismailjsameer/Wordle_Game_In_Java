@@ -104,6 +104,15 @@ public class WordleGame {
             checkGuess(guess, TARGET, unusedLetters);
             if (guessnum == 5) {
                     System.out.println("Sorry, you've used all your guesses. The correct word was: " + TARGET);
+                    System.out.println("Do you want to play again? (y/n)");
+                    String playAgain = scanner.nextLine().trim().toLowerCase();  
+
+                    if (playAgain.equals("y") || playAgain.equals("yes")) {
+                        main(args);
+                    } else {
+                        System.out.println("Thanks for playing!");
+                        System.exit(0); 
+                    }
                 }  
             else {
                 System.out.println("Incorrect guess. Please try again.");
